@@ -10,4 +10,6 @@ class ElementType extends Model
 {
     /** @use HasFactory<\Database\Factories\ElementTypeFactory> */
     use HasFactory,HasUlids;
+
+    protected $guarded = [];
 }

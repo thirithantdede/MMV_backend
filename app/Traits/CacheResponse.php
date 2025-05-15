@@ -61,7 +61,7 @@ trait CacheResponse
         return sprintf("%s-%s", $appName, $key);
     }
 
-/**
+    /**
      * Cache data with tags.
      *
      * @param array<string>|string $tags The cache tags

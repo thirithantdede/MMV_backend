@@ -26,7 +26,7 @@ return new class extends Migration
             $table->json('properties')->nullable(); // Additional properties as JSON
             $table->boolean('is_walkable')->default(false); // Whether this specific element can be walked on
             $table->boolean('is_highlighted')->default(false); // Whether this element is highlighted
-            $table->foreignIdFor(Floor::class)->constrained()->onDelete("cascade");
+            $table->foreignIdFor(Floor::class);
             $table->foreignIdFor(ElementType::class);
             $table->timestamps();
         });

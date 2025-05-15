@@ -12,6 +12,6 @@ class ElementSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        
     }
 }
