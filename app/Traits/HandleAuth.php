@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
@@ -37,9 +38,12 @@ trait HandleAuth
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             RateLimiter::hit($throttleKey, 60); // lockout for 60 seconds
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+            $login = Auth::guard()->attempt($request->only('email', 'password')); // log the attemp
+            if(!$login){
+                throw ValidationException::withMessages([
+                    'email' => ['These credentials do not match our records.'],
+                ]);
+            }
         }
 
         RateLimiter::clear($throttleKey);
