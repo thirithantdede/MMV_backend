@@ -20,7 +20,7 @@ return new class extends Migration
             $table->json('walking_paths')->nullable(); // Stores the walking paths for pathfinding
             $table->foreignIdFor(Project::class);
             $table->timestamps();
-            $table->unique(['project_id','level']);
+            $table->unique(['project_id', 'level']);
         });
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('analytics', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Project::class);
-            $table->foreignIdFor(Element::class)->nullable();//Optional link to a specific element
+            $table->foreignIdFor(Element::class)->nullable(); // Optional link to a specific element
             $table->string('event_type'); // search, route, click, view, etc.
             $table->json('event_data')->nullable(); // Additional data about the event
             $table->string('user_agent')->nullable();

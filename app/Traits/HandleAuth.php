@@ -2,17 +2,17 @@
 
 namespace App\Traits;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\RateLimiter;
-use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 trait HandleAuth
 {
     protected function getThrottleKey(Request $request)
     {
-        return strtolower($request->input('email')) . '|' . $request->ip();
+        return strtolower($request->input('email')).'|'.$request->ip();
     }
 
     /**
@@ -21,7 +21,7 @@ trait HandleAuth
     public function login(Request $request)
     {
         $request->validate([
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
@@ -49,7 +49,7 @@ trait HandleAuth
 
         return response()->json([
             'token' => $user->createToken('auth_token')->plainTextToken,
-            'user'  => $user,
+            'user' => $user,
         ]);
     }
 
@@ -69,7 +69,7 @@ trait HandleAuth
     public function me(Request $request)
     {
         return response()->json([
-            'user' => $request->user()
+            'user' => $request->user(),
         ]);
     }
 }

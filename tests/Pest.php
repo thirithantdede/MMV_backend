@@ -11,8 +11,16 @@
 |
 */
 
+use Database\Seeders\UserSeeder;
+
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->beforeEach(function () {
+        $this->withoutExceptionHandling();
+        $this->seed([
+            UserSeeder::class,
+        ]);
+    })
     ->in('Feature');
 
 /*

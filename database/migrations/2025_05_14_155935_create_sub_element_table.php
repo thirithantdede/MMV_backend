@@ -2,7 +2,6 @@
 
 use App\Models\Element;
 use App\Models\Floor;
-use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,13 +24,13 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
-            $table->json('social_media')->nullable(); 
+            $table->json('social_media')->nullable();
             $table->foreignIdFor(Element::class);
             $table->timestamps();
 
             Schema::create('events', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId(Element::class)->nullable();// Optional link to a specific location
+                $table->foreignId(Element::class)->nullable(); // Optional link to a specific location
                 $table->string('title');
                 $table->text('description')->nullable();
                 $table->timestamp('start_date');
@@ -59,8 +58,8 @@ return new class extends Migration
             Schema::create('floor_connections', function (Blueprint $table) {
                 $table->id();
                 $table->foreignIdFor(Element::class); // The element that connects floors
-                $table->foreignIdFor(Floor::class,'from_floor_id');
-                $table->foreignIdFor(Floor::class,'to_floor_id');
+                $table->foreignIdFor(Floor::class, 'from_floor_id');
+                $table->foreignIdFor(Floor::class, 'to_floor_id');
                 $table->enum('connection_type', ['elevator', 'stairs'])->default('elevator');
                 $table->boolean('is_bidirectional')->default(true); // Whether you can go both up and down
                 $table->timestamps();
