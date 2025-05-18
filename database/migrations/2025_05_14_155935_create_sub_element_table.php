@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shop_information', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->string('brand_name')->nullable();
             $table->text('detailed_description')->nullable();
             $table->string('logo_url')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             Schema::create('events', function (Blueprint $table) {
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->foreignId(Element::class)->nullable(); // Optional link to a specific location
                 $table->string('title');
                 $table->text('description')->nullable();
@@ -41,7 +41,7 @@ return new class extends Migration
             });
 
             Schema::create('promotions', function (Blueprint $table) {
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->foreignIdFor(Element::class); // Link to the store
                 $table->string('title');
                 $table->text('description')->nullable();
@@ -56,7 +56,7 @@ return new class extends Migration
             });
 
             Schema::create('floor_connections', function (Blueprint $table) {
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->foreignIdFor(Element::class); // The element that connects floors
                 $table->foreignIdFor(Floor::class, 'from_floor_id');
                 $table->foreignIdFor(Floor::class, 'to_floor_id');

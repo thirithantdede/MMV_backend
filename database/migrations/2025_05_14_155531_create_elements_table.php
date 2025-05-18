@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('elements', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('x'); // X position on the grid
@@ -29,6 +29,10 @@ return new class extends Migration
             $table->foreignIdFor(Floor::class);
             $table->foreignIdFor(ElementType::class);
             $table->timestamps();
+
+            // index floor_id
+            $table->index('floor_id');
+            $table->index('element_type_id');
         });
     }
 

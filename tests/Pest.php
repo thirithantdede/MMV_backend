@@ -11,6 +11,7 @@
 |
 */
 
+use Database\Seeders\ElementTypeSeeder;
 use Database\Seeders\UserSeeder;
 
 pest()->extend(Tests\TestCase::class)
@@ -19,6 +20,7 @@ pest()->extend(Tests\TestCase::class)
         $this->withoutExceptionHandling();
         $this->seed([
             UserSeeder::class,
+            ElementTypeSeeder::class,
         ]);
     })
     ->in('Feature');

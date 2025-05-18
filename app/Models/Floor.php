@@ -10,4 +10,6 @@ class Floor extends Model
 {
     /** @use HasFactory<\Database\Factories\FloorFactory> */
     use HasFactory,HasUlids;
+
+    protected $fillable = ['name','level','grid_size','walking_paths'];
 }

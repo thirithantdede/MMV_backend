@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('floors', function (Blueprint $table) {
-            $table->ulid();
+            $table->ulid('id')->primary();
             $table->string('name');
             $table->integer('level'); // Floor number (can be negative for basement levels)
             $table->integer('grid_size')->default(20); // Size of the grid cells in pixels

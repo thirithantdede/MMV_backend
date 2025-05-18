@@ -39,7 +39,7 @@ trait HandleAuth
         if (! $user || ! Hash::check($request->password, $user->password)) {
             RateLimiter::hit($throttleKey, 60); // lockout for 60 seconds
             $login = Auth::guard()->attempt($request->only('email', 'password')); // log the attemp
-            if(!$login){
+            if (! $login) {
                 throw ValidationException::withMessages([
                     'email' => ['These credentials do not match our records.'],
                 ]);

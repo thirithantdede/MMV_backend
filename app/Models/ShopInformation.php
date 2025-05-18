@@ -10,4 +10,14 @@ class ShopInformation extends Model
 {
     /** @use HasFactory<\Database\Factories\ShopInformationFactory> */
     use HasFactory,HasUlids;
+
+    /**
+     * Summary of element
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Element, $this>
+     */
+    public function element()
+    {
+        return $this->belongsTo(Element::class);
+    }
 }

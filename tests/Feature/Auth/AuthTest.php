@@ -3,33 +3,33 @@
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
-uses()->group('Feature','Auth');
+uses()->group('Feature', 'Auth');
 
-it("Login Request Validation Test",function(){
-    $this->postJson(route('api.login'),[]);
+it('Login Request Validation Test', function () {
+    $this->postJson(route('api.login'), []);
 })->throws(ValidationException::class);
 
-it("Attempt With Wrong Credentials",function(){
-    $response = $this->postJson(route('api.login'),[
-        "email" => "wrong@gmail.com",
-        "password" => "wrongpassword"
+it('Attempt With Wrong Credentials', function () {
+    $response = $this->postJson(route('api.login'), [
+        'email' => 'wrong@gmail.com',
+        'password' => 'wrongpassword',
     ]);
 
     $response->assertUnauthorized();
     $response->assertJsonStructure([
-        "message"
+        'message',
     ]);
 });
 
-it("Attempt With Correct Credentials",function(){
+it('Attempt With Correct Credentials', function () {
     $user = User::first();
-    $response = $this->postJson(route('api.login'),[
-        "email" => $user->email,
-        "password" => "password"
+    $response = $this->postJson(route('api.login'), [
+        'email' => $user->email,
+        'password' => 'password',
     ]);
 
     $response->assertOk();
     $response->assertJsonStructure([
-        "token"
+        'token',
     ]);
 });

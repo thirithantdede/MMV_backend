@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ElementTypeSeeder extends Seeder
 {
@@ -11,22 +12,19 @@ class ElementTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = ['store', 'elevator', 'room', 'pathway', 'door', 'banner', 'event', 'info', 'atm', 'security', 'promotion', 'floor', 'stairs'];
-
+        $names = ['store', 'elevator', 'room', 'pathway', 'door', 'banner', 'event', 'info', 'atm', 'security', 'promotion', 'floor', 'stairs'];
         $floorTransition = ['elevator', 'stairs'];
 
-        for ($i = 1; $i <= count($data); $i++) {
-            $data[$i]['id'] = $i;
-            $data[$i]['name'] = $data[$i];
-            if (in_array($data[$i]['name'], $floorTransition)) {
-                $data[$i]['is_floor_transition'] = true;
-                $data[$i]['is_walkable'] = true;
-                $data[$i]['is_store'] = false;
-            } else {
-                $data[$i]['is_floor_transition'] = false;
-                $data[$i]['is_walkable'] = false;
-                $data[$i]['is_store'] = true;
-            }
+        $data = [];
+
+        foreach ($names as $name) {
+            $data[] = [
+                'id' => (string) Str::ulid(),
+                'name' => $name,
+                'is_floor_transition' => in_array($name, $floorTransition),
+                'is_walkable' => in_array($name, $floorTransition),
+                'is_store' => ! in_array($name, $floorTransition),
+            ];
         }
 
         \App\Models\ElementType::insert($data);

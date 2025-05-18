@@ -17,10 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('address')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->string('phone')->nullable();
             $table->string('website')->nullable();
-            $table->string('email')->nullable();
+            $table->integer('grid_size')->default(20);
             $table->json('business_hours')->nullable();
             $table->json('building_footprint')->nullable(); // Stores the polygon points of the building outline
             $table->boolean('is_published')->default(false);

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('element_types', function (Blueprint $table) {
-            $table->ulid();
+            $table->ulid('id')->primary();
             $table->string('name');
             $table->boolean('is_walkable')->default(false); // Whether this element type can be walked on (for pathfinding)
             $table->boolean('is_store')->default(false); // Whether this element type represents a store
