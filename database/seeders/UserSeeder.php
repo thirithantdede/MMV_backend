@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                 'website' => 'website',
                 'grid_size' => 20,
                 'business_hours' => '1',
-                'building_footprint' => 'building_footprint',
+                'building_footprint' => json_encode([]),
                 'is_published' => true,
                 'published_at' => now(),
                 'user_id' => $newUser->id,

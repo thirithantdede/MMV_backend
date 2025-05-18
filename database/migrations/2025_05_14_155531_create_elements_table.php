@@ -21,11 +21,10 @@ return new class extends Migration
             $table->integer('y'); // Y position on the grid
             $table->integer('width')->default(1); // Width in grid cells
             $table->integer('height')->default(1); // Height in grid cells
+            $table->integer('rotation')->default(0); // Rotation in degrees
             $table->string('color')->nullable(); // Custom color override
             $table->string('icon')->nullable(); // Custom icon override
             $table->json('properties')->nullable(); // Additional properties as JSON
-            $table->boolean('is_walkable')->default(false); // Whether this specific element can be walked on
-            $table->boolean('is_highlighted')->default(false); // Whether this element is highlighted
             $table->foreignIdFor(Floor::class);
             $table->foreignIdFor(ElementType::class);
             $table->timestamps();

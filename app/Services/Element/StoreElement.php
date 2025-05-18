@@ -18,7 +18,6 @@ class StoreElement extends BaseElement
 
     public function createStoreInfo(array $data)
     {
-
         $baseElement = $this->createBaseElement($data);
 
         $data['element_id'] = $baseElement->id;
