@@ -12,4 +12,9 @@ class Element extends Model
     use HasFactory,HasUlids;
 
     protected $guarded = [];
+
+    public function getBorderRadiusAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

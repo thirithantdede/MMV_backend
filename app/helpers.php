@@ -1,7 +1,6 @@
 <?php
 
 if (! function_exists('tryCatch')) {
-
     function tryCatch(callable $callback, ?string $message = null, bool $withException = false): mixed
     {
         try {
@@ -27,5 +26,14 @@ if (! function_exists('tryCatch')) {
             return response()->json(['message' => $message], $status);
         }
     }
+}
 
+if (! function_exists('responseJson')) {
+    function responseJson(mixed $data, int $status = 200, bool $isSuccess = true): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'status' => $isSuccess ? 'success' : 'error',
+            ...$data,
+        ], $status);
+    }
 }

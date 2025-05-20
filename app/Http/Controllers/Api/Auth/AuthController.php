@@ -15,7 +15,7 @@ class AuthController extends Controller
         try {
             return $this->authService->login($request);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return responseJson(['message' => $e->getMessage()], status: 401, isSuccess: false);
         }
     }
 }
