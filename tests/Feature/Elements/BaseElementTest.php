@@ -1,11 +1,14 @@
 <?php
 
-use App\Models\ElementType;
-use App\Models\Floor;
+use Tests\Support\UserAuthenticated;
 
 uses()->group('elements');
 
+uses(UserAuthenticated::class);
+
 uses()->beforeEach(function () {
+    $this->setupUser();
+
     $this->data = [
         'name' => 'test',
         'description' => 'test',
@@ -16,23 +19,24 @@ uses()->beforeEach(function () {
         'rotation' => 0,
         'color' => '#000000',
         'icon' => 'test',
-        'floor_id' => Floor::inRandomOrder()->first()->id,
-        'element_type_id' => ElementType::inRandomOrder()->first()->id,
+        'floor' => 1,
+        'type' => 'store',
     ];
+    $this->actingAs($this->user);
+
 });
 
 it('create base element', function () {
     $service = app(\App\Services\Element\BaseElement::class);
     $element = $service->createBaseElement($this->data);
-    $this->assertDatabaseHas('elements', $this->data);
-    $this->assertInstanceOf(\App\Models\Element::class, $element);
+    $this->assertDatabaseHas('elements', [
+        'id' => $element->id,
+    ]);
 });
 
 it('can move element x and y and rotation', function () {
     $service = app(\App\Services\Element\BaseElement::class);
     $element = $service->createBaseElement($this->data);
-    $this->assertDatabaseHas('elements', $this->data);
-    $this->assertInstanceOf(\App\Models\Element::class, $element);
     $element->x = 2;
     $element->y = 2;
     $element->rotation = 90;

@@ -16,15 +16,17 @@ return new class extends Migration
     {
         Schema::create('shop_information', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('brand_name')->nullable();
-            $table->text('detailed_description')->nullable();
-            $table->string('logo_url')->nullable();
-            $table->string('subcategory')->nullable();
-            $table->json('business_hours')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+            $table->string('contactPerson')->nullable();
+            $table->string('contactEmail')->nullable();
+            $table->string('contactPhone')->nullable();
+            $table->string('logo')->nullable();
+            $table->boolean('is_foc')->nullable();
+            $table->json('openingHours')->nullable();
             $table->string('website')->nullable();
             $table->json('social_media')->nullable();
+            $table->json('promotions')->nullable();
             $table->foreignIdFor(Element::class);
             $table->foreignIdFor(StoreCategory::class)->default(1);
             $table->timestamps();

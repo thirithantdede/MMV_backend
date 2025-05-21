@@ -19,6 +19,7 @@ class StoreCategorySeeder extends Seeder
                 'name' => $item,
             ];
         }
+
         \App\Models\StoreCategory::insert($data);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
+use App\Http\Controllers\Api\Sync\SyncElmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,5 +17,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(StoreCategoryController::class)->group(function () {
         Route::get('/store-category', 'index')->name('store-category.list');
+    });
+
+    Route::controller(SyncElmentController::class)->group(function () {
+        Route::post('/sync-elements', 'syncElements')->name('sync-elements');
     });
 });

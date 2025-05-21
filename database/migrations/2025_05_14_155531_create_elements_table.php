@@ -22,8 +22,12 @@ return new class extends Migration
             $table->integer('width')->default(1); // Width in grid cells
             $table->integer('height')->default(1); // Height in grid cells
             $table->integer('rotation')->default(0); // Rotation in degrees
+            $table->integer('opacity')->default(0); // Opacity in degrees
             $table->string('color')->nullable(); // Custom color override
             $table->string('icon')->nullable(); // Custom icon override
+            $table->string('notes')->nullable(); // Custom icon override
+            $table->boolean('is_closed')->default(false); // Custom icon override
+            $table->boolean('walkable')->default(false); // Custom icon override
             $table->json('properties')->nullable(); // Additional properties as JSON
             $table->json('border_radius')->default('{"topLeft": 0, "topRight": 0, "bottomRight": 0, "bottomLeft": 0}');
             $table->foreignIdFor(Floor::class);

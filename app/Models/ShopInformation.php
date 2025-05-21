@@ -11,6 +11,23 @@ class ShopInformation extends Model
     /** @use HasFactory<\Database\Factories\ShopInformationFactory> */
     use HasFactory,HasUlids;
 
+    protected $guarded = [];
+
+    public function getOpeningHoursAttribute(): array
+    {
+        return json_decode($this->attributes['opening_hours']);
+    }
+
+    public function getSocialMediaAttribute(): array
+    {
+        return json_decode($this->attributes['social_media']);
+    }
+
+    public function getPromotionsAttribute(): array
+    {
+        return json_decode($this->attributes['promotions']);
+    }
+
     /**
      * Summary of element
      *
