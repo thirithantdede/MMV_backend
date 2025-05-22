@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BuildingFootprint;
 use App\Models\Project;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -35,8 +36,12 @@ class UserSeeder extends Seeder
                 'user_id' => $newUser->id,
             ]);
 
+            BuildingFootprint::create([
+                'project_id' => $project->id,
+            ]);
+
             $floors = [];
-            for ($i = 1; $i <= 3; $i++) {
+            for ($i = 1; $i <= 4; $i++) {
                 $floors[] = [
                     'id' => Str::ulid(),
                     'name' => $user.'-floor-'.$i,

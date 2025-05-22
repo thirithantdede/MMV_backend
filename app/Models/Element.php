@@ -26,7 +26,7 @@ class Element extends Model
     protected $appends = ['type', 'floor'];
 
     // hide floor relations
-    protected $hidden = ['floor_id', 'element_type_id', 'floorRelation', 'elementType'];
+    protected $hidden = ['floor_id', 'element_type_id', 'floorRelation', 'elementType', 'created_at', 'updated_at'];
 
     public function getTypeAttribute(): string
     {

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model
 {
@@ -21,6 +22,8 @@ class Project extends Model
 
     protected $with = ['floors'];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     /**
      * Summary of floors
      *
@@ -29,5 +32,15 @@ class Project extends Model
     public function floors(): HasMany
     {
         return $this->hasMany(Floor::class);
+    }
+
+    /**
+     * Summary of user
+     *
+     * @return HasOne<BuildingFootprint, $this>
+     */
+    public function buildingFootprint(): HasOne
+    {
+        return $this->hasOne(BuildingFootprint::class);
     }
 }

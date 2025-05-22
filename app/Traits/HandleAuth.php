@@ -54,6 +54,7 @@ trait HandleAuth
         return response()->json([
             'token' => $user->createToken('auth_token')->plainTextToken,
             'user' => $user,
+            'status' => 'success',
         ]);
     }
 

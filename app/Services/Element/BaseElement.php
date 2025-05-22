@@ -42,10 +42,12 @@ class BaseElement
             'width' => $data['width'] ?? 80,
             'height' => $data['height'] ?? 80,
             'rotation' => $data['rotation'] ?? 0,
+            'opacity' => $data['opacity'] ?? 100,
             'color' => $data['color'] ?? '#000000',
             'icon' => $data['icon'] ?? 'FA',
             'floor_id' => $floor->id,
             'element_type_id' => $elementType->id,
+            'border_radius' => json_encode($data['border_radius'] ?? ['topLeft' => 0, 'topRight' => 0, 'bottomRight' => 0, 'bottomLeft' => 0]),
         ];
     }
 

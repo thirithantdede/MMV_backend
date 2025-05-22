@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Loading\LoadingController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
 use App\Http\Controllers\Api\Sync\SyncElmentController;
 use Illuminate\Http\Request;
@@ -19,7 +20,21 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/store-category', 'index')->name('store-category.list');
     });
 
+    Route::controller(LoadingController::class)->group(function () {
+        Route::get('/project-data', 'index')->name('loading.list');
+        Route::get('/project-elements', 'projectElements')->name('loading.list');
+    });
+
     Route::controller(SyncElmentController::class)->group(function () {
         Route::post('/sync-elements', 'syncElements')->name('sync-elements');
     });
+
+    Route::get('/auth-check', function () {
+        sleep(1);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User is authenticated',
+        ]);
+    })->name('auth-check');
 });
