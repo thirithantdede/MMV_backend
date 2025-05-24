@@ -40,7 +40,7 @@ class Element extends Model
 
     public function getFloorAttribute()
     {
-        return $this->floorRelation->level;
+        return $this?->floorRelation?->level ?? 0;
     }
 
     /**
@@ -57,5 +57,10 @@ class Element extends Model
     public function floorRelation(): BelongsTo
     {
         return $this->belongsTo(Floor::class, 'floor_id');
+    }
+
+    public function shopInformation()
+    {
+        return $this->hasOne(ShopInformation::class);
     }
 }

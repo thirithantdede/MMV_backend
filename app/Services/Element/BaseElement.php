@@ -24,15 +24,18 @@ class BaseElement
                     $element = $this->updateBaseElement($element, $elementData);
                 }
             }
-
-            return $element;
+            return (new ElementService)->relationService($element, $elementData);
         });
     }
 
     public function prepareBaseElementData(array $data): array
     {
         $authUser = auth()->user();
-        $floor = Floor::where('project_id', $authUser->project->id)->where('level', $data['floor'])->firstOrFail();
+        if($data['floor'] != 0){
+            $floor = Floor::where('project_id', $authUser->project->id)->where('level', $data['floor'])->firstOrFail();
+        }else{
+            $floor = (object) ['id' => 0];
+        }
         $elementType = ElementType::where('name', $data['type'])->first();
 
         return [
@@ -46,6 +49,7 @@ class BaseElement
             'color' => $data['color'] ?? '#000000',
             'icon' => $data['icon'] ?? 'FA',
             'floor_id' => $floor->id,
+            'project_id' => $authUser->project->id,
             'element_type_id' => $elementType->id,
             'border_radius' => json_encode($data['border_radius'] ?? ['topLeft' => 0, 'topRight' => 0, 'bottomRight' => 0, 'bottomLeft' => 0]),
         ];

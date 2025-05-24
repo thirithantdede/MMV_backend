@@ -18,13 +18,14 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->string('contactPerson')->nullable();
-            $table->string('contactEmail')->nullable();
-            $table->string('contactPhone')->nullable();
+            $table->string('contact_person')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->string('contact_phone')->nullable();
             $table->string('logo')->nullable();
             $table->boolean('is_foc')->nullable();
-            $table->json('openingHours')->nullable();
+            $table->string('opening_hours')->nullable();
             $table->string('website')->nullable();
+            $table->json('closed_days')->nullable();
             $table->json('social_media')->nullable();
             $table->json('promotions')->nullable();
             $table->foreignIdFor(Element::class);

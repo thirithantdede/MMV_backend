@@ -2,6 +2,7 @@
 
 use App\Models\ElementType;
 use App\Models\Floor;
+use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->json('border_radius')->default('{"topLeft": 0, "topRight": 0, "bottomRight": 0, "bottomLeft": 0}');
             $table->foreignIdFor(Floor::class);
             $table->foreignIdFor(ElementType::class);
+            $table->foreignIdFor(Project::class);
             $table->timestamps();
 
             // index floor_id
