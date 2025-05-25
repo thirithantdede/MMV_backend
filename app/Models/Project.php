@@ -22,7 +22,14 @@ class Project extends Model
 
     protected $with = ['floors'];
 
+    protected $appends = ['total_floors'];
+
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function getTotalFloorsAttribute()
+    {
+        return $this->floors->count();
+    }
 
     /**
      * Summary of floors

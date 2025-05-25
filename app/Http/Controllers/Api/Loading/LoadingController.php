@@ -21,6 +21,7 @@ class LoadingController extends Controller
             'project' => $project,
             'floors' => $floors,
             'building_footprint' => $building_footprint,
+            '',
         ]);
     }
 

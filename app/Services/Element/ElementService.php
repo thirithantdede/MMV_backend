@@ -15,11 +15,14 @@ class ElementService
         return $elementsByFloors;
     }
 
-    public function relationService(Element $element, array $data){
-        if($element->type == 'store'){
-            $element->shop_information = (new StoreElement)->mutateElement($element, $data);
+    public function relationService(Element $element, array $data): Element
+    {
+        if ($element->type == 'store') {
+            $element->shop_information = (new StoreElement)->mutateElement($element, $data['shop_information'] ?? []);
+
             return $element;
         }
-        return ;
+
+        return $element;
     }
 }

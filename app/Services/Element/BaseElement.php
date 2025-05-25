@@ -24,6 +24,7 @@ class BaseElement
                     $element = $this->updateBaseElement($element, $elementData);
                 }
             }
+
             return (new ElementService)->relationService($element, $elementData);
         });
     }
@@ -31,9 +32,9 @@ class BaseElement
     public function prepareBaseElementData(array $data): array
     {
         $authUser = auth()->user();
-        if($data['floor'] != 0){
+        if ($data['floor'] != 0) {
             $floor = Floor::where('project_id', $authUser->project->id)->where('level', $data['floor'])->firstOrFail();
-        }else{
+        } else {
             $floor = (object) ['id' => 0];
         }
         $elementType = ElementType::where('name', $data['type'])->first();

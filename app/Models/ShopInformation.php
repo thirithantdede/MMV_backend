@@ -13,26 +13,33 @@ class ShopInformation extends Model
 
     protected $guarded = [];
 
-
     public function getClosedDaysAttribute(): array
     {
         $value = $this->attributes['closed_days'] ?? null;
+
         return is_string($value) ? json_decode($value, true) ?? [] : [];
     }
-    
-    
+
+    public function getOpeningHoursAttribute(): array
+    {
+        $value = $this->attributes['opening_hours'] ?? null;
+
+        return is_string($value) ? json_decode($value, true) ?? [] : [];
+    }
+
     public function getSocialMediaAttribute(): array
     {
         $value = $this->attributes['social_media'] ?? null;
+
         return is_string($value) ? json_decode($value, true) ?? [] : [];
     }
-    
+
     public function getPromotionsAttribute(): array
     {
         $value = $this->attributes['promotions'] ?? null;
+
         return is_string($value) ? json_decode($value, true) ?? [] : [];
     }
-    
 
     /**
      * Summary of element

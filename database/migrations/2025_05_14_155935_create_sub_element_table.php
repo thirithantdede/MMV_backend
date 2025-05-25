@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('contact_phone')->nullable();
             $table->string('logo')->nullable();
             $table->boolean('is_foc')->nullable();
-            $table->string('opening_hours')->nullable();
             $table->string('website')->nullable();
+            $table->json('opening_hours')->nullable();
             $table->json('closed_days')->nullable();
             $table->json('social_media')->nullable();
             $table->json('promotions')->nullable();

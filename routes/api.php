@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(SyncElmentController::class)->group(function () {
         Route::post('/sync-elements', 'syncElements')->name('sync-elements');
+        Route::post('/sync-map', 'syncMap')->name('sync-elements');
     });
 
     Route::get('/auth-check', function () {

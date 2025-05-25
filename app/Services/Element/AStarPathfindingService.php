@@ -7,9 +7,9 @@ class AStarPathfindingService
     /**
      * Find the shortest path using the A* algorithm.
      *
-     * @param array $grid 2D array representing the map (0 = walkable, 1 = obstacle)
-     * @param array $start [x, y] start position
-     * @param array $end [x, y] end position
+     * @param  array  $grid  2D array representing the map (0 = walkable, 1 = obstacle)
+     * @param  array  $start  [x, y] start position
+     * @param  array  $end  [x, y] end position
      * @return array|null List of [x, y] positions representing the path, or null if no path found
      */
     public function findPath(array $grid, array $start, array $end): ?array
@@ -29,12 +29,13 @@ class AStarPathfindingService
         $gScore[$startKey] = 0;
         $fScore[$startKey] = $this->heuristic($start, $end);
 
-        while (!empty($openSet)) {
+        while (! empty($openSet)) {
             // Get node in openSet with lowest fScore
             $currentKey = array_reduce(array_keys($openSet), function ($carry, $key) use ($fScore) {
                 if ($carry === null || ($fScore[$key] ?? INF) < ($fScore[$carry] ?? INF)) {
                     return $key;
                 }
+
                 return $carry;
             });
             $current = $openSet[$currentKey];
@@ -52,7 +53,7 @@ class AStarPathfindingService
                     continue;
                 }
                 $tentativeG = ($gScore[$currentKey] ?? INF) + 1;
-                if (!isset($openSet[$neighborKey]) || $tentativeG < ($gScore[$neighborKey] ?? INF)) {
+                if (! isset($openSet[$neighborKey]) || $tentativeG < ($gScore[$neighborKey] ?? INF)) {
                     $cameFrom[$neighborKey] = $currentKey;
                     $gScore[$neighborKey] = $tentativeG;
                     $fScore[$neighborKey] = $tentativeG + $this->heuristic($neighbor, $end);
@@ -60,6 +61,7 @@ class AStarPathfindingService
                 }
             }
         }
+
         return null;
     }
 
@@ -72,7 +74,7 @@ class AStarPathfindingService
     private function getNeighbors(array $pos, int $rows, int $cols): array
     {
         $neighbors = [];
-        $dirs = [[0,1],[1,0],[0,-1],[-1,0]];
+        $dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
         foreach ($dirs as $dir) {
             $nx = $pos[0] + $dir[0];
             $ny = $pos[1] + $dir[1];
@@ -80,12 +82,13 @@ class AStarPathfindingService
                 $neighbors[] = [$nx, $ny];
             }
         }
+
         return $neighbors;
     }
 
     private function posKey(array $pos): string
     {
-        return $pos[0] . ',' . $pos[1];
+        return $pos[0].','.$pos[1];
     }
 
     private function reconstructPath(array $cameFrom, string $currentKey): array
@@ -95,6 +98,7 @@ class AStarPathfindingService
             $currentKey = $cameFrom[$currentKey];
             array_unshift($totalPath, $this->parseKey($currentKey));
         }
+
         return $totalPath;
     }
 
