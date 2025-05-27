@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Loading\LoadingController;
+use App\Http\Controllers\Api\Publish\PublishController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
 use App\Http\Controllers\Api\Sync\SyncElmentController;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
@@ -40,3 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
     })->name('auth-check');
 });
 
+Route::controller(PublishController::class)->group(function () {
+    Route::get("/projects/{uri}", "viewProject")->name("publish.viewProject");
+});

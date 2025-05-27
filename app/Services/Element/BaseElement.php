@@ -71,4 +71,14 @@ class BaseElement
 
         return $element;
     }
+
+    public function deleteElement(string $id)
+    {
+        $element = Element::find($id);
+        if($element){
+            $element->delete();
+            return true;
+        }
+        return false;
+    }
 }

@@ -25,4 +25,11 @@ class ElementService
 
         return $element;
     }
+
+    public function deleteElement(string $id)
+    {
+        $element = Element::findOrFail($id);
+        $element->delete();
+        return true;
+    }
 }

@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class PublishController extends Controller
 {
-    public function publish(Request $request): JsonResponse
+    public function viewProject(Request $request): JsonResponse
     {
-        $data =  (new PublishService)->getData($request);
+        $data = (new PublishService)->getData($request);
         return responseJson($data);
     }
 }
