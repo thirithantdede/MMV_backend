@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Loading\LoadingController;
 use App\Http\Controllers\Api\Publish\PublishController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
 use App\Http\Controllers\Api\Sync\SyncElmentController;
+use App\Http\Controllers\Api\UserData\UserDataProviderController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(SyncElmentController::class)->group(function () {
         Route::post('/sync-elements', 'syncElements')->name('sync-elements');
         Route::post('/sync-map', 'syncMap')->name('sync-elements');
+        Route::post('/delete-element', 'deleteElement')->name('delete-element');
+    });
+
+    Route::controller(PublishController::class)->group(function () {
+        Route::post("/publish-project", "publishProject")->name("publish.publishProject");
     });
 
     Route::get('/auth-check', function () {
@@ -44,4 +50,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::controller(PublishController::class)->group(function () {
     Route::get("/projects/{uri}", "viewProject")->name("publish.viewProject");
+});
+
+Route::controller(UserDataProviderController::class)->group(function () {
+    Route::get("/get-promotions/{project_id}", "getPromotionElements")->name("user-data");
+    Route::get("/search-elements/{project_id}", "searchElements")->name("search-elements");
 });

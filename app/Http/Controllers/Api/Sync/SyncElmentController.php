@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Sync\SyncElementsRequest;
 use App\Http\Requests\SyncMapRequest;
 use App\Models\BuildingFootprint;
+use App\Models\Element;
 use App\Services\Sync\SyncElementService;
 use App\Services\Sync\SyncMapService;
+use Illuminate\Http\Request;
 
 class SyncElmentController extends Controller
 {
@@ -25,5 +27,11 @@ class SyncElmentController extends Controller
         $syncedMap = (new SyncMapService)->syncMap($buildingFootprint, $data);
 
         return responseJson(['data' => $syncedMap]);
+    }
+
+    public function deleteElement(Request $request){
+        $element = Element::findOrFail($request->id);
+        $element->delete();
+        return true;
     }
 }

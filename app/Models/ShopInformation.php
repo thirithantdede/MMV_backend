@@ -50,4 +50,9 @@ class ShopInformation extends Model
     {
         return $this->belongsTo(Element::class);
     }
+
+    public function scopeWithNonEmptyShopInfo($query)
+    {
+        return $query->whereRaw("JSON_LENGTH(shop_information) > 0");
+    }
 }

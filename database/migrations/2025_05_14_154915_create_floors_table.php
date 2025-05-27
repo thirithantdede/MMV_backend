@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('level'); // Floor number (can be negative for basement levels)
             $table->integer('grid_size')->default(20); // Size of the grid cells in pixels
-            $table->json('walking_paths')->nullable(); // Stores the walking paths for pathfinding
+            $table->jsonb('walking_paths')->nullable(); // Stores the walking paths for pathfinding
             $table->foreignIdFor(Project::class);
             $table->timestamps();
             $table->unique(['project_id', 'level']);

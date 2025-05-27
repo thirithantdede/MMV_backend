@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PublishService
 {
     public function getData(Request $request){
-        $project = Project::where('uri', $request->uri)->first();
+        $project = Project::where('uri', $request->uri)->where('is_public',true)->firstOrFail();
         if($project->is_public == false){
             return responseJson([
                 'message' => 'Project is not public',
@@ -28,4 +28,31 @@ class PublishService
             'elements' => $elements,
         ];
     }
+
+    public function publish(Request $request)
+    {
+        $project = auth()->user()->project;
+
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->uri = $request->uri;
+        $project->is_public = $request->is_public;
+
+        // Increment patch version
+        $version = $project->current_version ?? '1.0.0';
+        $parts = explode('.', $version);
+
+        if (count($parts) === 3) {
+            $parts[2] = (int)$parts[2] + 1; // increment patch
+            $project->current_version = implode('.', $parts);
+        } else {
+            $project->current_version = '1.0.0'; // fallback if version format is incorrect
+        }
+
+        $project->published_at = now();
+        $project->save();
+
+        return $project;
+    }
+
 }

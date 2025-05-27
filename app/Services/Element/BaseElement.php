@@ -9,6 +9,28 @@ use Illuminate\Support\Facades\DB;
 
 class BaseElement
 {
+
+    public function searchElements(string|null $search = " ", array $floor_ids): array {
+        $query = Element::with('shopInformation')->whereIn('floor_id', $floor_ids);
+    
+        $search = trim(strtolower($search)); // normalize
+    
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw('LOWER(name) LIKE ?', ["%$search%"])
+                  ->orWhereRaw('LOWER(description) LIKE ?', ["%$search%"])
+                  ->orWhereHas('shopInformation', function ($subQuery) use ($search) {
+                      $subQuery->whereRaw('LOWER(name) LIKE ?', ["%$search%"]);
+                  });
+            });
+        }
+    
+        return $query->limit(20)->get()->toArray();
+    }
+    
+
+
+
     public function createOrUpdateElement(array $elementData): Element
     {
         return DB::transaction(function () use ($elementData) {

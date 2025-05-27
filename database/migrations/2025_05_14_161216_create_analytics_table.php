@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Project::class);
             $table->foreignIdFor(Element::class)->nullable(); // Optional link to a specific element
             $table->string('event_type'); // search, route, click, view, etc.
-            $table->json('event_data')->nullable(); // Additional data about the event
+            $table->jsonb('event_data')->nullable(); // Additional data about the event
             $table->string('user_agent')->nullable();
             $table->string('ip_address')->nullable();
             $table->timestamps();

@@ -36,8 +36,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->string('email')->nullable();
-            $table->json('business_hours')->nullable();
-            $table->json('building_footprint')->nullable(); // Stores the polygon points of the building outline
+            $table->jsonb('business_hours')->nullable();
+            $table->jsonb('building_footprint')->nullable(); // Stores the polygon points of the building outline
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->foreignId('created_by')->constrained('users');
@@ -75,7 +75,7 @@ return new class extends Migration
             $table->integer('grid_size')->default(20); // Size of the grid cells in pixels
             $table->integer('width')->default(1000); // Width of the floor in grid cells
             $table->integer('height')->default(1000); // Height of the floor in grid cells
-            $table->json('walking_paths')->nullable(); // Stores the walking paths for pathfinding
+            $table->jsonb('walking_paths')->nullable(); // Stores the walking paths for pathfinding
             $table->timestamps();
             $table->unique(['mall_id', 'level']);
         });
@@ -93,7 +93,7 @@ return new class extends Migration
             $table->integer('height')->default(1); // Height in grid cells
             $table->string('color')->nullable(); // Custom color override
             $table->string('icon')->nullable(); // Custom icon override
-            $table->json('properties')->nullable(); // Additional properties as JSON
+            $table->jsonb('properties')->nullable(); // Additional properties as JSON
             $table->boolean('is_walkable')->default(false); // Whether this specific element can be walked on
             $table->boolean('is_highlighted')->default(false); // Whether this element is highlighted
             $table->timestamps();
@@ -108,11 +108,11 @@ return new class extends Migration
             $table->string('logo_url')->nullable();
             $table->string('category')->nullable();
             $table->string('subcategory')->nullable();
-            $table->json('business_hours')->nullable();
+            $table->jsonb('business_hours')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
-            $table->json('social_media')->nullable(); // JSON with social media links
+            $table->jsonb('social_media')->nullable(); // JSON with social media links
             $table->timestamps();
         });
 
@@ -175,7 +175,7 @@ return new class extends Migration
             $table->foreignId('mall_id')->constrained()->onDelete('cascade');
             $table->foreignId('element_id')->nullable()->constrained(); // Optional link to a specific element
             $table->string('event_type'); // search, route, click, view, etc.
-            $table->json('event_data')->nullable(); // Additional data about the event
+            $table->jsonb('event_data')->nullable(); // Additional data about the event
             $table->string('user_agent')->nullable();
             $table->string('ip_address')->nullable();
             $table->timestamps();
@@ -196,7 +196,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->json('settings'); // Export settings (format, quality, included elements, etc.)
+            $table->jsonb('settings'); // Export settings (format, quality, included elements, etc.)
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
@@ -211,7 +211,7 @@ return new class extends Migration
             $table->string('file_path');
             $table->string('file_type'); // png, jpg, pdf, svg, json, etc.
             $table->integer('file_size')->nullable(); // Size in bytes
-            $table->json('export_settings'); // The settings used for this export
+            $table->jsonb('export_settings'); // The settings used for this export
             $table->timestamps();
         });
     }

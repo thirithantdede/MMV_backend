@@ -9,6 +9,25 @@ use Illuminate\Support\Facades\DB;
 
 class StoreElement
 {
+    public function getPromotionElements(array $floor_ids)
+    {
+        $elements = Element::with('shopInformation')->whereIn('floor_id',$floor_ids)->whereHas('shopInformation', function ($query) {
+            $query->whereNotNull('promotions')
+                ->where(function ($query) {
+                    $query->where('promotions', '!=', '[]')
+                          ->where('promotions', '!=', '{}');
+                })
+                ->where(function ($query) {
+                    $query->whereJsonDoesntContain('promotions->is_now', false)
+                          ->orWhereNull('promotions->is_now');
+                });
+        })->get();
+    
+        return $elements;
+    }
+    
+
+
     public function mutateElement(Element $element, array $data): ShopInformation
     {
         return DB::transaction(function () use ($element, $data) {

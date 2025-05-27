@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('notes')->nullable(); // Custom icon override
             $table->boolean('is_closed')->default(false); // Custom icon override
             $table->boolean('walkable')->default(false); // Custom icon override
-            $table->json('properties')->nullable(); // Additional properties as JSON
-            $table->json('border_radius')->default('{"topLeft": 0, "topRight": 0, "bottomRight": 0, "bottomLeft": 0}');
+            $table->jsonb('properties')->nullable(); // Additional properties as JSON
+            $table->jsonb('border_radius')->default('{"topLeft": 0, "topRight": 0, "bottomRight": 0, "bottomLeft": 0}');
             $table->foreignIdFor(Floor::class);
             $table->foreignIdFor(ElementType::class);
             $table->foreignIdFor(Project::class);

@@ -17,12 +17,7 @@ class SyncElementService
     {
         $syncedElements = [];
         foreach ($elements as $element) {
-            if($element['isDeleted'] == true){
-                $this->elementService->deleteElement($element['id']);
-                continue;
-            }else{
                 $syncedElements[] = $this->elementService->createOrUpdateElement($element);
-            }
         }
 
         return $syncedElements;
