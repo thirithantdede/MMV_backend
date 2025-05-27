@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = ['userA', 'userB'];
+        $users = ['userA', 'userB','thirithant','userC'];
 
         foreach ($users as $user) {
             $newUser = \App\Models\User::factory()->create([

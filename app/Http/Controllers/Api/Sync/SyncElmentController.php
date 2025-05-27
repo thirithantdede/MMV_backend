@@ -20,7 +20,7 @@ class SyncElmentController extends Controller
 
     public function syncMap(SyncMapRequest $request)
     {
-        $buildingFootprint = BuildingFootprint::where('id', $request->map_setting['id'])->firstOrFail();
+        $buildingFootprint = auth()->user()->project->buildingFootprint;
         $data = $request->map_setting;
         $syncedMap = (new SyncMapService)->syncMap($buildingFootprint, $data);
 

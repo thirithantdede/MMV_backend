@@ -18,6 +18,7 @@ class Project extends Model
         'address',
         'website', 'grid_size', 'business_hours', 'building_footprint',
         'is_published', 'published_at', 'user_id',
+        'uri','is_public','current_version'
     ];
 
     protected $with = ['floors'];

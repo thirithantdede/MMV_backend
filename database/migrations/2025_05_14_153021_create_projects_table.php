@@ -22,6 +22,9 @@ return new class extends Migration
             $table->json('business_hours')->nullable();
             $table->json('building_footprint')->nullable(); // Stores the polygon points of the building outline
             $table->boolean('is_published')->default(false);
+            $table->string('uri')->nullable()->unique();
+            $table->boolean('is_public')->default(true);
+            $table->string('current_version')->default("1.0.0");
             $table->timestamp('published_at')->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();

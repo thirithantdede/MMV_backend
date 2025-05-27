@@ -39,3 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
         ]);
     })->name('auth-check');
 });
+
+
+Route::get("/projects/{uri}",)
