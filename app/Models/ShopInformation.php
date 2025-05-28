@@ -13,6 +13,10 @@ class ShopInformation extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'category',
+    ];
+
     public function getClosedDaysAttribute(): array
     {
         $value = $this->attributes['closed_days'] ?? null;
@@ -25,6 +29,11 @@ class ShopInformation extends Model
         $value = $this->attributes['opening_hours'] ?? null;
 
         return is_string($value) ? json_decode($value, true) ?? [] : [];
+    }
+
+    public function getCategoryAttribute()
+    {
+        return $this->storeCategory->name ?? null;
     }
 
     public function getSocialMediaAttribute(): array
@@ -49,6 +58,11 @@ class ShopInformation extends Model
     public function element()
     {
         return $this->belongsTo(Element::class);
+    }
+
+    public function storeCategory()
+    {
+        return $this->belongsTo(StoreCategory::class);
     }
 
     public function scopeWithNonEmptyShopInfo($query)

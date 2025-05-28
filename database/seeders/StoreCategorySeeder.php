@@ -11,7 +11,7 @@ class StoreCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $list = ['Retail', 'Food', 'Drink', 'Service', 'Other', 'Mobile Phone', 'Computer', 'Furniture', 'Electronics', 'Clothing', 'Beauty', 'Health', 'Sports', 'Travel', 'Home', 'Garden', 'Pet', 'Automotive', 'Music', 'Book', 'Movie', 'Game', 'Toy', 'Furniture', 'Electronics', 'Clothing', 'Beauty', 'Health', 'Sports', 'Travel', 'Home', 'Garden', 'Pet', 'Automotive', 'Music', 'Book', 'Movie', 'Game', 'Toy'];
+        $list = ['Retail', 'Food', 'Drink', 'Service', 'Other', 'Mobile Phone', 'Computer', 'Furniture', 'Electronics', 'Clothing', 'Beauty', 'Health', 'Sports', 'Travel', 'Home', 'Garden', 'Pet', 'Automotive', 'Music', 'Book', 'Movie', 'Game', 'Toy'];
 
         $data = [];
         foreach ($list as $item) {
