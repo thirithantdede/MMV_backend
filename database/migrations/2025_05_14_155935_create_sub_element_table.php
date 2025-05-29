@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('shop_information', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->string('readable_id')->unique();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('contact_person')->nullable();

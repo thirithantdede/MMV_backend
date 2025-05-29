@@ -12,6 +12,12 @@ class GuestUserSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+         $guestUsers = ["guest-userA@gmail.com","guest-userB@gmail.com"];
+
+        foreach ($guestUsers as $guestUser) {
+            \App\Models\GuestUser::factory()->create([
+                'email' => $guestUser,
+            ]);
+        }
     }
 }

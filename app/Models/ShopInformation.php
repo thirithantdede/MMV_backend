@@ -17,7 +17,41 @@ class ShopInformation extends Model
         'category',
     ];
 
-    public function getClosedDaysAttribute(): array
+    public static function boot(){
+        parent::boot();
+        static::creating(function ($model) {
+            $model->readable_id = $model->generateReadableId();
+        });
+    }
+    public function generateReadableId()
+    {
+        $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $readableId = '';
+        $length = 3; // 3 letters from A-Z
+    
+        for ($i = 0; $i < $length; $i++) {
+            $readableId .= $alphabet[random_int(0, 25)];
+        }
+    
+        $maxAttempts = 10;
+        $attempt = 0;
+    
+        do {
+            $random = str_pad(mt_rand(0, 999), 3, '0', STR_PAD_LEFT);
+            $candidateId = 'shop-id-' . $readableId . $random;
+            $exists = static::where('readable_id', $candidateId)->exists();
+            $attempt++;
+    
+            if ($attempt >= $maxAttempts) {
+                throw new \Exception('Could not generate a unique readable ID after ' . $maxAttempts . ' attempts');
+            }
+        } while ($exists);
+    
+        return $candidateId;
+    }
+    
+
+    public function getClosedDaysAttribute(): array | string
     {
         $value = $this->attributes['closed_days'] ?? null;
 

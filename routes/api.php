@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Loading\LoadingController;
 use App\Http\Controllers\Api\Publish\PublishController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
 use App\Http\Controllers\Api\Sync\SyncElmentController;
+use App\Http\Controllers\Api\UpdateShopInfoController;
 use App\Http\Controllers\Api\UserData\UserDataProviderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(PublishController::class)->group(function () {
         Route::post("/publish-project", "publishProject")->name("publish.publishProject");
+    });
+
+    Route::controller(UpdateShopInfoController::class)->group(function () {
+        Route::get("/shop-information/{id}", "getShop")->name("get-shop-info");
+        Route::post("/get-shop-info", "getShopInfo")->name("shop-info");
+        Route::post("/update-shop-info", "updateShopInfo")->name("shop-info");
     });
 
     Route::get('/auth-check', function () {
