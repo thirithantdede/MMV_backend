@@ -35,12 +35,18 @@ return new class extends Migration
 
         Schema::create('events', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId(Element::class)->nullable(); // Optional link to a specific location
+            $table->foreignIdFor(Element::class)->nullable(); // Optional link to a specific location
             $table->string('title');
+            $table->string('company');
+            $table->string('hosts');
             $table->text('description')->nullable();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
+            $table->string("start_time")->nullable();
+            $table->string("end_time")->nullable();
+            $table->boolean("is_foc")->default(false);
             $table->string('image_url')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
         });
@@ -52,6 +58,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
+            $table->string("start_time")->nullable();
+            $table->string("end_time")->nullable();
             $table->string('image_url')->nullable();
             $table->string('discount_type')->nullable(); // percentage, fixed amount, etc.
             $table->decimal('discount_value', 10, 2)->nullable();

@@ -20,6 +20,14 @@ class UserDataProviderController extends Controller
         return responseJson(['elements' => $elements]);
     }
 
+    public function getEventElements(Request $request){
+        $project = $request->project_id;
+        $project = Project::find($project);
+        $floorIds = $project->floors->pluck('id')->toArray();
+        $elements = (new StoreElement)->getEventElements($floorIds);
+        return responseJson(['elements' => $elements]);
+    }
+
     public function searchElements(Request $request){
         $project = $request->project_id;
         $project = Project::find($project);
@@ -27,4 +35,5 @@ class UserDataProviderController extends Controller
         $elements = (new BaseElement)->searchElements( $request->search,$floorIds);
         return responseJson(['elements' => $elements]);
     }
+
 }

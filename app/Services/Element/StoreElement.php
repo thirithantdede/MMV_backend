@@ -25,6 +25,13 @@ class StoreElement
     
         return $elements;
     }
+
+    public function getEventElements(array $floor_ids)
+    {
+        $elements = Element::with('event')->whereHas('event')->whereIn('floor_id',$floor_ids)->get();
+
+        return $elements;
+    }
     
 
 

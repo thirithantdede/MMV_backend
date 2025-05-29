@@ -19,7 +19,10 @@ class ElementService
     {
         if ($element->type == 'store') {
             $element->shop_information = (new StoreElement)->mutateElement($element, $data['shop_information'] ?? []);
-
+            return $element;
+        }
+        else if ($element->type =='event') {
+            $element->event = (new EventService)->mutateElement($element, $data['event']?? []);
             return $element;
         }
 

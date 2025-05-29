@@ -13,7 +13,7 @@ class FloorService
         $floorsQuery = Floor::where('project_id', $project->id);
 
         if ($loadElements) {
-            $floorsQuery->with('elements.shopInformation');
+            $floorsQuery->with(['elements.shopInformation','elements.event']);
         }
 
         $floors = $floorsQuery->get();

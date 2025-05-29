@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function handleLogin(LoginRequest $request)
     {
         try {
-            return $this->authService->login($request);
+            return $this->authService->login($request,'web');
         } catch (\Exception $e) {
             return responseJson(['message' => $e->getMessage()], status: 401, isSuccess: false);
         }

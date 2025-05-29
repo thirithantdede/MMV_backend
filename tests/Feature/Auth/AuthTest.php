@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GuestUser;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
@@ -29,6 +30,32 @@ it('Attempt With Correct Credentials', function () {
     ]);
 
     $response->assertOk();
+    $response->assertJsonStructure([
+        'token',
+    ]);
+});
+
+it("Attempt with Guest User Credentials", function () {
+    $guestUser = GuestUser::factory()->create();
+    $response = $this->postJson(route('api.guest.login'), [
+        'email' => $guestUser->email,
+        'password' => 'password',
+    ]);
+    $response->assertOk();
+    $response->assertJsonStructure([
+        'token',
+    ]);
+});
+
+
+it("can register guest user info", function () {
+    $response = $this->postJson(route('api.guest.register'), [
+        'name' => "test user",
+        'email' => "userA@gmail.com",
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ]);
+    $response->assertCreated();
     $response->assertJsonStructure([
         'token',
     ]);

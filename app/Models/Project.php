@@ -16,6 +16,7 @@ class Project extends Model
         'name',
         'description',
         'address',
+        'photo',
         'website', 'grid_size', 'business_hours', 'building_footprint',
         'is_published', 'published_at', 'user_id',
         'uri','is_public','current_version'
@@ -23,9 +24,14 @@ class Project extends Model
 
     protected $with = ['floors'];
 
-    protected $appends = ['total_floors'];
+    protected $appends = ['total_floors','photo_path'];
 
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function getPhotoPathAttribute()
+    {
+        return asset('storage/project/cover/' . $this->photo);
+    }
 
     public function getTotalFloorsAttribute()
     {

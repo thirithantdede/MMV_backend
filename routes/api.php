@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\GuestUserAuthController;
 use App\Http\Controllers\Api\Loading\LoadingController;
 use App\Http\Controllers\Api\Publish\PublishController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
 use App\Http\Controllers\Api\Sync\SyncElmentController;
 use App\Http\Controllers\Api\UserData\UserDataProviderController;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
@@ -17,6 +17,12 @@ Route::get('/user', function (Request $request) {
 Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'handleLogin'])->name('api.login');
 });
+
+Route::middleware('guest')->prefix('shop-user')->group(function () {
+    Route::post('/login', [GuestUserAuthController::class, 'handleLogin'])->name('api.guest.login');
+    Route::post('/register', [GuestUserAuthController::class, 'handleRegister'])->name('api.guest.register');
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(StoreCategoryController::class)->group(function () {
@@ -39,8 +45,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/auth-check', function () {
-        sleep(1);
-
         return response()->json([
             'status' => 'success',
             'message' => 'User is authenticated',
@@ -54,5 +58,8 @@ Route::controller(PublishController::class)->group(function () {
 
 Route::controller(UserDataProviderController::class)->group(function () {
     Route::get("/get-promotions/{project_id}", "getPromotionElements")->name("user-data");
+    Route::get("/get-events/{project_id}", "getEventElements")->name("user-data");
     Route::get("/search-elements/{project_id}", "searchElements")->name("search-elements");
+
+    Route::get("/explore-data","exploreData")->name("explore-data");
 });

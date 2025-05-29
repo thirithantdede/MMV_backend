@@ -63,4 +63,8 @@ class Element extends Model
     {
         return $this->hasOne(ShopInformation::class);
     }
+
+    public function event(){
+        return $this->hasOne(Event::class);
+    }
 }

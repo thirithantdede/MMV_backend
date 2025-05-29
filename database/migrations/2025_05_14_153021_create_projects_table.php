@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('photo')->nullable();
             $table->string('address')->nullable();
             $table->string('website')->nullable();
             $table->boolean('is_published')->default(false);
