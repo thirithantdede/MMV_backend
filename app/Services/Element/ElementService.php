@@ -8,6 +8,7 @@ use App\Services\Floor\FloorService;
 
 class ElementService
 {
+    
     public function getElements(Project $project)
     {
         $elementsByFloors = (new FloorService)->getFloors($project, true);
@@ -17,7 +18,8 @@ class ElementService
 
     public function relationService(Element $element, array $data): Element
     {
-        if ($element->type == 'store') {
+        $shopInformationType = ['office','store','restaurant','cafe','anchor-store','kisok'];
+        if (in_array($element->type, $shopInformationType)) {
             $element->shop_information = (new StoreElement)->mutateElement($element, $data['shop_information'] ?? []);
             return $element;
         }
