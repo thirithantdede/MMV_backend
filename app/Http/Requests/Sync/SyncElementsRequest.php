@@ -24,7 +24,7 @@ class SyncElementsRequest extends FormRequest
         return [
             'elements.*.id' => 'required|string',
             'elements.*.name' => 'required|string',
-            'elements.*.type' => 'required|exists:element_types,name',
+            // 'elements.*.type' => 'required|exists:element_types,name',
         ];
     }
 }
