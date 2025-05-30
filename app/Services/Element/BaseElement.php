@@ -5,13 +5,14 @@ namespace App\Services\Element;
 use App\Models\Element;
 use App\Models\ElementType;
 use App\Models\Floor;
+use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 
 class BaseElement
 {
 
-    public function searchElements(string|null $search = " ", array $floor_ids): array {
-        $query = Element::with('shopInformation')->whereIn('floor_id', $floor_ids);
+    public function searchElements(string|null $search = " ", Project $project): array {
+        $query = Element::with('shopInformation')->where('project_id', $project->id);
     
         $search = trim(strtolower($search)); // normalize
     

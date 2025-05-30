@@ -32,7 +32,7 @@ class UserDataProviderController extends Controller
         $project = $request->project_id;
         $project = Project::find($project);
         $floorIds = $project->floors->pluck('id')->toArray();
-        $elements = (new BaseElement)->searchElements( $request->search,$floorIds);
+        $elements = (new BaseElement)->searchElements( $request->search,$project);
         return responseJson(['elements' => $elements]);
     }
 

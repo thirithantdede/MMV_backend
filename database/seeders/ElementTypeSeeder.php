@@ -14,7 +14,7 @@ class ElementTypeSeeder extends Seeder
     {
         $names = ['store', 'elevator', 'room', 'pathway', 'door',
         'anchor-store','kisok',
-        'banner', 'event', 'info', 'atm', 'security', 'promotion', 'floor', 'stairs','office',"restaurant","cafe"];
+        'banner', 'event', 'info', 'atm', 'security', 'promotion', 'floor', 'stairs','office',"restaurant","cafe","escalator"];
         $floorTransition = ['elevator', 'stairs','escalator'];
 
         $data = [];
