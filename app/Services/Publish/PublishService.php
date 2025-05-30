@@ -25,9 +25,6 @@ class PublishService
     public function getData(Request $request): array
     {
         try {
-            $request->validate([
-                'uri' => 'required|string|max:255',
-            ]);
 
             $project = Project::where('uri', $request->uri)
                 ->where('is_public', true)
