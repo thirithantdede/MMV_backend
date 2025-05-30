@@ -13,7 +13,7 @@ class ElementTypeSeeder extends Seeder
     public function run(): void
     {
         $names = ['store', 'elevator', 'room', 'pathway', 'door', 'banner', 'event', 'info', 'atm', 'security', 'promotion', 'floor', 'stairs'];
-        $floorTransition = ['elevator', 'stairs'];
+        $floorTransition = ['elevator', 'stairs','escalator'];
 
         $data = [];
 

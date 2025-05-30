@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('rotation')->default(0); // Rotation in degrees
             $table->integer('opacity')->default(0); // Opacity in degrees
             $table->string('color')->nullable(); // Custom color override
+            $table->string('border_color')->nullable(); // Custom color override
             $table->string('border_style')->default('solid'); // Custom color override
             $table->string('icon')->nullable(); // Custom icon override
             $table->string('notes')->nullable(); // Custom icon override

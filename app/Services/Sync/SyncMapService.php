@@ -17,6 +17,7 @@ class SyncMapService
             'building_height' => $data['building_height'],
             'restricted' => $data['restricted'],
             'grid_size' => $data['grid_size'],
+            'show_opening_hours' => $data['show_opening_hours'] ?? false,
             'show_grid' => $data['show_grid'],
         ]);
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('building_height')->default(1200);
             $table->boolean('restricted')->default(true);
             $table->boolean('show_grid')->default(true);
+            $table->boolean('show_opening_hours')->default(true);
             $table->unsignedSmallInteger('grid_size')->default(20);
             $table->timestamps();
         });
