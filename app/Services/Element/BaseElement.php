@@ -40,6 +40,16 @@ class BaseElement
     public function createOrUpdateElement(array $elementData): Element
     {
         return DB::transaction(function () use ($elementData) {
+
+            // find in element that with with same x and y and floor id
+            $element = Element::where('x', $elementData['x'])
+                ->where('y', $elementData['y'])
+                ->where('floor_id', $elementData['floor_id'])
+                ->first();
+            if ($element) {
+                return $element;
+            }
+
             if (str_starts_with($elementData['id'], 'new_element')) {
                 $element = $this->createBaseElement($elementData);
                 $element->old_element_id = $elementData['id'];
