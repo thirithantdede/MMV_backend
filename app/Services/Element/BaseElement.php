@@ -41,10 +41,10 @@ class BaseElement
     {
         return DB::transaction(function () use ($elementData) {
 
-            // find in element that with with same x and y and floor id
+            $floor = Floor::where('project_id', auth()->user()->project->id)->where('level', $elementData['floor'])->firstOrFail();
             $element = Element::where('x', $elementData['x'])
                 ->where('y', $elementData['y'])
-                ->where('floor_id', $elementData['floor_id'])
+                ->where('floor_id', $floor->id)
                 ->first();
             if ($element) {
                 return $element;
