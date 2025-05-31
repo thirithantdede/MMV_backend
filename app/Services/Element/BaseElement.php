@@ -46,7 +46,7 @@ class BaseElement
                 ->where('y', $elementData['y'])
                 ->where('floor_id', $floor->id)
                 ->get();
-            if (count($elementCount)) {
+            if (count($elementCount) > 1) {
                 return $elementCount[0];
             }
 
