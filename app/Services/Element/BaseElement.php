@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\DB;
 class BaseElement
 {
 
-    public function searchElements(string|null $search = " ", Project $project): array {
+    public function searchElements(string|null $search = " ",string|null $floor, Project $project): array {
         $query = Element::with('shopInformation')->where('project_id', $project->id);
-    
+        
         $search = trim(strtolower($search)); // normalize
     
         if (!empty($search)) {
@@ -24,6 +24,11 @@ class BaseElement
                       $subQuery->whereRaw('LOWER(name) LIKE ?', ["%$search%"]);
                   });
             });
+        }
+
+        if(isset($floor) && $floor != "all"){
+            $floorModel = Floor::where('project_id', $project->id)->where('level', $floor)->firstOrFail();
+            $query->where('floor_id', $floorModel->id);
         }
     
         return $query->limit(20)->get()->toArray();

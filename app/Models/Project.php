@@ -57,4 +57,12 @@ class Project extends Model
     {
         return $this->hasOne(BuildingFootprint::class);
     }
+
+    public function elements(){
+        return $this->hasMany(Element::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = ['userA', 'userB','userC','userD','userE','userF','userG','userH','userI','userJ','thirithant'];
+        $users = ['userA', 'userB','userC','userD','thirithant'];
 
         foreach ($users as $user) {
             $newUser = \App\Models\User::factory()->create([
@@ -25,10 +25,11 @@ class UserSeeder extends Seeder
 
             $project = Project::create([
                 'name' => $user.'-project',
-                'description' => 'description',
-                'address' => 'address',
-                'website' => 'website',
-                'is_published' => true,
+                'description' => 'project description',
+                'address' => fake()->address(),
+                'website' => fake()->url(),
+                'is_published' => false,
+                'is_public' => false,
                 'published_at' => now(),
                 'user_id' => $newUser->id,
             ]);

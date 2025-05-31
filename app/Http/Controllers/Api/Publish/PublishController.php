@@ -15,6 +15,12 @@ class PublishController extends Controller
         return responseJson($data);
     }
 
+    public function projectLists(Request $request): JsonResponse
+    {
+        $data = (new PublishService)->getProjectLists($request);
+        return responseJson(['data' => $data]);
+    }
+
     public function publishProject(Request $request): JsonResponse
     {
         $data = (new PublishService)->publish($request);

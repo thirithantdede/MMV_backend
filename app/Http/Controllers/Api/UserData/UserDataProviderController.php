@@ -30,9 +30,8 @@ class UserDataProviderController extends Controller
 
     public function searchElements(Request $request){
         $project = $request->project_id;
-        $project = Project::find($project);
-        $floorIds = $project->floors->pluck('id')->toArray();
-        $elements = (new BaseElement)->searchElements( $request->search,$project);
+        $project = Project::where('id',$project)->first();
+        $elements = (new BaseElement)->searchElements( $request->search,$request->floor,$project);
         return responseJson(['elements' => $elements]);
     }
 

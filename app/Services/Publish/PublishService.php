@@ -56,6 +56,17 @@ class PublishService
         }
     }
 
+    public function getProjectLists(Request $request): array
+    {
+        $projects = Project::
+        with("user")
+        ->withCount('elements')
+        ->where("is_public", true)
+        ->get()->toArray();
+
+        return $projects;
+    }
+
     /**
      * Publish or update a project with validation and version control
      *

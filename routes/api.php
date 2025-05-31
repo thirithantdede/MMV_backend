@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::controller(PublishController::class)->group(function () {
+    Route::get("/projects", "projectLists")->name("publish.projectLists");
     Route::get("/projects/{uri}", "viewProject")->name("publish.viewProject");
 });
 
