@@ -37,17 +37,17 @@ class BaseElement
 
 
 
-    public function createOrUpdateElement(array $elementData): Element
+    public function createOrUpdateElement(array $elementData): Element 
     {
         return DB::transaction(function () use ($elementData) {
 
             $floor = Floor::where('project_id', auth()->user()->project->id)->where('level', $elementData['floor'])->firstOrFail();
-            $element = Element::where('x', $elementData['x'])
+            $elementCount = Element::where('x', $elementData['x'])
                 ->where('y', $elementData['y'])
                 ->where('floor_id', $floor->id)
-                ->first();
-            if ($element) {
-                return $element;
+                ->get();
+            if (count($elementCount)) {
+                return $elementCount[0];
             }
 
             if (str_starts_with($elementData['id'], 'new_element')) {
