@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\Element\StoreElement;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Cache;
 
 class Project extends Model
 {
@@ -27,6 +29,14 @@ class Project extends Model
     protected $appends = ['total_floors','photo_path'];
 
     protected $hidden = ['created_at', 'updated_at'];
+
+
+    public function getViewCountAttribute()
+    {
+        return Cache::remember("project_view_count_{$this->id}", now()->addMinutes(15), function () {
+            return $this->views()->count();
+        });
+    }
 
     public function getPhotoPathAttribute()
     {
@@ -62,7 +72,16 @@ class Project extends Model
         return $this->hasMany(Element::class);
     }
 
+    public function storeElements(){
+        return $this->hasManyThrough(ShopInformation::class, Element::class);
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function views()
+    {
+        return $this->hasMany(ProjectView::class);
     }
 }

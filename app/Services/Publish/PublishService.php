@@ -2,6 +2,7 @@
 
 namespace App\Services\Publish;
 
+use App\Events\ViewRecorded;
 use App\Models\Project;
 use App\Services\BuildingFootPrint\BuildingFootPrintService;
 use App\Services\Element\ElementService;
@@ -29,6 +30,8 @@ class PublishService
             $project = Project::where('uri', $request->uri)
                 ->where('is_public', true)
                 ->firstOrFail();
+
+            event(new ViewRecorded($project, $request->ip()));
 
             return [
                 'status' => 'success',
@@ -60,9 +63,13 @@ class PublishService
     {
         $projects = Project::
         with("user")
-        ->withCount('elements')
+        ->withCount('storeElements as elements_count')
         ->where("is_public", true)
-        ->get()->toArray();
+        ->get()
+        ->each(function ($project) {
+            $project->append('view_count');
+        })
+        ->toArray();
 
         return $projects;
     }

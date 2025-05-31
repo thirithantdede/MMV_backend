@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Events\ViewRecorded;
+use App\Models\ProjectView;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Cache;
+
+class LogView
+{
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handle(ViewRecorded $event): void
+    {
+        $cacheKey = "view_{$event->project->id}_{$event->ip_address}";
+        if (!Cache::has($cacheKey)) {
+            ProjectView::create([
+                'project_id' => $event->project->id,
+                'ip_address' => $event->ip_address,
+            ]);
+
+            Cache::put($cacheKey, true, now()->addHours(24));
+
+            Cache::forget("project_view_count_{$event->project->id}");
+        }
+    }
+}
