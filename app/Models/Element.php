@@ -51,6 +51,11 @@ class Element extends Model
         return $this->belongsTo(ElementType::class);
     }
 
+    public function storeCategory()
+    {
+        return $this->belongsTo(StoreCategory::class);
+    }
+
     /**
      * @return BelongsTo<Floor, $this>
      */

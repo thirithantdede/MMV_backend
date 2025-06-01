@@ -6,13 +6,19 @@ use App\Models\Element;
 use App\Models\ElementType;
 use App\Models\Floor;
 use App\Models\Project;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BaseElement
 {
 
-    public function searchElements(string|null $search = " ",string|null $floor, Project $project): array {
-        $query = Element::with('shopInformation')->where('project_id', $project->id);
+    public function searchElements(Request $request, Project $project): array {
+        $query = Element::with( 'shopInformation')->where('project_id', $project->id);
+        $search = $request->input('search');
+        $floor = $request->input('floor');
+        $category = trim($request->input('category'));
+
+        \Log::info('Search: ' . $category);
         
         $search = trim(strtolower($search)); // normalize
     
@@ -30,6 +36,14 @@ class BaseElement
             $floorModel = Floor::where('project_id', $project->id)->where('level', $floor)->firstOrFail();
             $query->where('floor_id', $floorModel->id);
         }
+
+        if(isset($category) && $category != "" && $category != "all"){
+            $query->whereHas('shopInformation', function ($subQuery) use ($category) {
+                $subQuery->whereHas('storeCategory', function ($subSubQuery) use ($category) {
+                    $subSubQuery->where('name', $category);
+                }); 
+            });
+        }   
     
         return $query->limit(20)->get()->toArray();
     }
