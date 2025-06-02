@@ -28,7 +28,6 @@ return new class extends Migration
             $table->foreignIdFor(Project::class)->nullable(); // Optional link to a specific element
             $table->string("ip_address")->nullable();
             $table->string("user_agent")->nullable();
-
             $table->timestamps();
         });
     }

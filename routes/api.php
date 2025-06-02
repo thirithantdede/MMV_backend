@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\GuestUserAuthController;
+use App\Http\Controllers\api\FloorController;
 use App\Http\Controllers\Api\Loading\LoadingController;
 use App\Http\Controllers\Api\Publish\PublishController;
 use App\Http\Controllers\Api\Store\StoreCategoryController;
@@ -43,6 +44,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(PublishController::class)->group(function () {
         Route::post("/publish-project", "publishProject")->name("publish.publishProject");
+    });
+
+    Route::controller(FloorController::class)->group(function () {
+        Route::post("/create-new-floor", "createNewFloor")->name("create-new-floor");
     });
 
     Route::controller(UpdateShopInfoController::class)->group(function () {

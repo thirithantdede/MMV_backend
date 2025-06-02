@@ -23,16 +23,10 @@ class LogView
      */
     public function handle(ViewRecorded $event): void
     {
-        $cacheKey = "view_{$event->project->id}_{$event->ip_address}";
-        if (!Cache::has($cacheKey)) {
-            ProjectView::create([
-                'project_id' => $event->project->id,
-                'ip_address' => $event->ip_address,
-            ]);
-
-            Cache::put($cacheKey, true, now()->addHours(24));
-
-            Cache::forget("project_view_count_{$event->project->id}");
-        }
+        ProjectView::create([
+            'project_id' => $event->project->id,
+            'ip_address' => $event->ip_address,
+        ]);
+        Cache::forget("project_view_count_{$event->project->id}");
     }
 }

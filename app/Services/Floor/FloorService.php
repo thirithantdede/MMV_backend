@@ -45,7 +45,16 @@ class FloorService
 
     public function createFloor(array $data): Floor
     {
-        $floor = Floor::create($data);
+        // get max floors from project
+        $maxFloors = Floor::where('project_id', auth()->user()->project->id)->max('level');
+        $data['level'] = $maxFloors + 1;
+        $floor = Floor::create([
+            'name' => "Floor-" . $data['level'],
+            'level' => $data['level'],
+            'grid' => $data['grid'],
+            'project_id' => auth()->user()->project->id,
+            'walking_paths' => true
+        ]);
 
         return $floor;
     }
