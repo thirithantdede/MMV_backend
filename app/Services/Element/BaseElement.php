@@ -55,17 +55,16 @@ class BaseElement
     {
         return DB::transaction(function () use ($elementData) {
 
-            $floor = Floor::where('project_id', auth()->user()->project->id)->where('level', $elementData['floor'])->first();
-            if($floor){
-                $elementCount = Element::where('x', $elementData['x'])
-                ->where('y', $elementData['y'])
-                ->where('floor_id', $floor->id)
-                ->get();
-                    if (count($elementCount) > 1) {
-                        return $elementCount[0];
-            }
-
-           }
+            // $floor = Floor::where('project_id', auth()->user()->project->id)->where('level', $elementData['floor'])->first();
+            // if($floor){
+            //     $elementCount = Element::where('x', $elementData['x'])
+            //     ->where('y', $elementData['y'])
+            //     ->where('floor_id', $floor->id)
+            //     ->get();
+            //         if (count($elementCount) > 1) {
+            //             return $elementCount[0];
+            // }
+        //    }
             if (str_starts_with($elementData['id'], 'new_element')) {
                 $element = $this->createBaseElement($elementData);
                 $element->old_element_id = $elementData['id'];
