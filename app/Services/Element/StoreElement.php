@@ -53,7 +53,7 @@ class StoreElement
     public function prepareData(array $data, Element $element): array
     {
         return [
-            'name' => $data['name'] ?? 'Shop 1',
+            'name' => $element->name ?? 'Shop 1',
             'description' => $data['description'] ?? 'Shop Information',
             'contact_person' => $data['contact_person'] ?? 'John Doe',
             'contact_phone' => $data['contact_phone'] ?? '1234567890',
