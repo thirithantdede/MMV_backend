@@ -26,6 +26,9 @@ class UpdateShopInfoController extends Controller
     public function updateShopInfo(Request $request)
     {
         $shop_information = ShopInformation::with('element')->where("id",$request->id)->firstOrFail();
+        $shop_information->element->update([
+            'name' => $request['name'],
+        ]);
         $data = (new StoreElement)->prepareData($request->all(),$shop_information->element);
         (new StoreElement)->updateStoreInfo($shop_information,$data);
         return responseJson(['shop_information' => $shop_information]);
