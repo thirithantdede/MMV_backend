@@ -10,4 +10,6 @@ class Analytics extends Model
 {
     /** @use HasFactory<\Database\Factories\AnalyticsFactory> */
     use HasFactory,HasUlids;
+
+    protected $guarded = [];
 }

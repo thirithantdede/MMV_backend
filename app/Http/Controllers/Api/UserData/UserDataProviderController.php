@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\UserData;
 
+use App\Events\AnalysicEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Services\Element\BaseElement;
 use App\Services\Element\StoreElement;
+use App\Services\Sync\SyncElementService;
 use Illuminate\Http\Request;
 
 class UserDataProviderController extends Controller
@@ -28,10 +30,16 @@ class UserDataProviderController extends Controller
         return responseJson(['elements' => $elements]);
     }
 
+    public function syncRoutes(Request $request){
+        $elements = (new SyncElementService)->syncRoutes($request->from_element_id,$request->to_element_id);
+        return responseJson(['status' => $elements]);
+    }
+
     public function searchElements(Request $request){
         $project = $request->project_id;
         $project = Project::where('id',$project)->first();
         $elements = (new BaseElement)->searchElements( $request,$project);
+
         return responseJson(['elements' => $elements]);
     }
 

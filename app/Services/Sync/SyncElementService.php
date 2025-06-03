@@ -2,6 +2,8 @@
 
 namespace App\Services\Sync;
 
+use App\Events\AnalysicEvent;
+use App\Models\Element;
 use App\Services\Element\BaseElement;
 
 class SyncElementService
@@ -21,6 +23,21 @@ class SyncElementService
         }
 
         return $syncedElements;
+    }
+
+    public function syncRoutes($fromElementId, $toElementId){
+        $fromElement = Element::where('id',$fromElementId)->first();
+        $toElement = Element::where('id',$toElementId)->first();
+
+        if($fromElement){
+            event(new AnalysicEvent($fromElement, "from-route", $fromElement, request()));
+        }
+        if($toElement){
+            event(new AnalysicEvent($toElement, "to-route", $toElement, request()));
+        }
+
+        return true;
+
     }
 
     public function clarifyElments($elements)

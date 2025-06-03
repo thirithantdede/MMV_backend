@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('analytics', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id');
             $table->foreignIdFor(Project::class);
             $table->foreignIdFor(Element::class)->nullable(); // Optional link to a specific element
             $table->string('event_type'); // search, route, click, view, etc.

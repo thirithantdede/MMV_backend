@@ -2,6 +2,7 @@
 
 namespace App\Services\Element;
 
+use App\Events\AnalysicEvent;
 use App\Models\Element;
 use App\Models\ElementType;
 use App\Models\Floor;
@@ -18,8 +19,6 @@ class BaseElement
         $floor = $request->input('floor');
         $category = trim($request->input('category'));
 
-        \Log::info('Search: ' . $category);
-        
         $search = trim(strtolower($search)); // normalize
     
         if (!empty($search)) {
@@ -44,8 +43,16 @@ class BaseElement
                 }); 
             });
         }   
-    
-        return $query->limit(20)->get()->toArray();
+
+        $elements = $query->limit(20)->get();
+
+        if(!empty($search)){
+            foreach ($elements as $element) {
+                event(new AnalysicEvent($element, "search", $search, $request));
+            }
+        }
+
+        return $elements->toArray();
     }
     
 

@@ -74,5 +74,7 @@ Route::controller(UserDataProviderController::class)->group(function () {
     Route::get("/get-events/{project_id}", "getEventElements")->name("user-data");
     Route::get("/search-elements/{project_id}", "searchElements")->name("search-elements");
 
+    Route::post("/sync-routes", "syncRoutes")->name("sync-routes");
+
     Route::get("/explore-data","exploreData")->name("explore-data");
 });

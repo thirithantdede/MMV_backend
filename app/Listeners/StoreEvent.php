@@ -25,9 +25,9 @@ class StoreEvent
         Analytics::create([
             'project_id' => $event->element->project_id,
             'element_id' => $event->element->id,
-            'action' => $event->action,
-            'event_data' =>  $event->data,
-            'ip' => $event->request->ip(),
+            'event_type' => $event->action,
+            'event_data' =>  json_encode( ['body' => $event->data]),
+            'ip_address' => $event->request->ip(),
             'user_agent' => $event->request->userAgent(),
         ]);
     }
