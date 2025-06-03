@@ -70,6 +70,9 @@ class StoreElement
 
     public function updateStoreInfo(ShopInformation $shopElement, array $data)
     {
+        $shopElement->element->update([
+            'name' => $data['name'],
+        ]);
         $shopElement->update($data);
 
         return $shopElement;
