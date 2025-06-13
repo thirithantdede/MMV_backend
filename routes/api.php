@@ -18,6 +18,7 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'handleLogin'])->name('api.login');
+    Route::post('/register', [AuthController::class, 'handleRegister'])->name('api.register');
 });
 
 Route::middleware('guest')->prefix('shop-user')->group(function () {
