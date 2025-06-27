@@ -72,4 +72,9 @@ class Element extends Model
     public function event(){
         return $this->hasOne(Event::class);
     }
+
+    public function analytics()
+    {
+        return $this->hasMany(Analytics::class);
+    }
 }

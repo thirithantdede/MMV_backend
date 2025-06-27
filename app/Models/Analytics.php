@@ -12,4 +12,9 @@ class Analytics extends Model
     use HasFactory,HasUlids;
 
     protected $guarded = [];
+
+    public function element()
+    {
+        return $this->belongsTo(Element::class);
+    }
 }

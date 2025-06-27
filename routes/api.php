@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\GuestUserAuthController;
+use App\Http\Controllers\Api\Dashboard\DashboardController;
 use App\Http\Controllers\api\FloorController;
 use App\Http\Controllers\Api\Loading\LoadingController;
 use App\Http\Controllers\Api\Publish\PublishController;
@@ -55,6 +56,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/shop-information/{id}", "getShop")->name("get-shop-info");
         Route::post("/get-shop-info", "getShopInfo")->name("shop-info");
         Route::post("/update-shop-info", "updateShopInfo")->name("shop-info");
+    });
+
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get("/dashboard/statistics", "statistics")->name("dashboard.statistics");
+        Route::get("/dashboard/popular-stores", "popularStores")->name("dashboard.popular-stores");
+        Route::get("/dashboard/visitor-tracks", "visitorTracks")->name("dashboard.visitor-tracks");
     });
 
     Route::get('/auth-check', function () {
