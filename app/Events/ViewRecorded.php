@@ -20,7 +20,6 @@ class ViewRecorded
      */
     public function __construct(public Project $project,public string $ip_address)
     {
-        //
     }
 
     /**

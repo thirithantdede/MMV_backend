@@ -64,4 +64,19 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function getTableAnaylytic(): JsonResponse
+    {
+        $user = auth()->user();
+        $project = Project::where("user_id",$user->id)->first();
+        $dateType = request()->get("date_type","hour");
+        $dashboard = new DashboardService($project,$dateType);
+
+        $tableAnalytic = $dashboard->getTableAnalytic();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $tableAnalytic,
+        ]);
+    }
+
 }

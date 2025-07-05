@@ -10,15 +10,6 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
-   protected $listen = [
-        ViewRecorded::class => [
-            LogView::class,
-        ],
-        AnalysicEvent::class => [
-            StoreEvent::class,
-        ],
-    ];
-
     public function boot(): void
     {
         //

@@ -62,6 +62,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/dashboard/statistics", "statistics")->name("dashboard.statistics");
         Route::get("/dashboard/popular-stores", "popularStores")->name("dashboard.popular-stores");
         Route::get("/dashboard/visitor-tracks", "visitorTracks")->name("dashboard.visitor-tracks");
+
+        Route::get("/dashboard/get-table-analytic", "getTableAnaylytic")->name("dashboard.get-table-anaylytic");
     });
 
     Route::get('/auth-check', function () {

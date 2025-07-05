@@ -217,4 +217,30 @@ class DashboardService
     
         return $stores;
     }
+
+    public function getTableAnalytic()
+    {
+        $topStores = Analytics::select('element_id',DB::raw('count(element_id) as total'))
+        ->where('project_id','=', $this->project->id)
+        ->where('event_type','=', 'to-route')
+        ->whereBetween('created_at', [$this->startDate, $this->endDate])
+        ->groupBy('element_id')
+        ->orderBy('total','desc')
+        ->limit(10)
+        ->get();
+
+        $elementIds = $topStores->pluck('element_id');
+
+        $elements = Element::select('id','name','element_type_id','floor_id')
+        ->with("shopInformation","storeCategory")
+        ->whereIn('id',$elementIds)
+        ->get();
+
+        $elements = $elements->map(function ($element) use ($topStores) {
+            $element->total = $topStores->where('element_id', $element->id)->first()->total;
+            return $element;
+        });
+
+        return $elements->sortByDesc('total');
+    }
 }
