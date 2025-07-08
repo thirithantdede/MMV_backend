@@ -3,6 +3,7 @@
 namespace App\Services\Element;
 
 use App\Models\Element;
+use App\Models\Promotion;
 use App\Models\ShopInformation;
 use App\Models\StoreCategory;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,27 @@ class StoreElement
 
     public function prepareData(array $data, Element $element): array
     {
+
+        if(isset($data['promotions']) && $data['promotions']['is_now'] == true){
+            Promotion::updateOrCreate(
+                [
+                    'element_id' => $element->id,
+                    'title' => isset($data['promotions']['title']) ? $data['promotions']['title'] : 'Promotion',
+                    'is_featured' => 1
+                ],
+                [
+                    'title' => isset($data['promotions']['title']) ? $data['promotions']['title'] : 'Promotion',
+                    'description' => isset($data['promotions']['description']) ? $data['promotions']['description'] : 'Promotion Description',
+                    'start_date' => now(),
+                    'end_date' => isset($data['promotions']['end_date']) ? $data['promotions']['end_date'] : now()->addDays(30),
+                    'is_featured' => true
+                ]
+            );
+            
+        }else{
+            Promotion::where('element_id', $element->id)->update(['is_featured' => false]);
+        }
+
         return [
             'name' => $element->name ?? 'Shop 1',
             'description' => $data['description'] ?? 'Shop Information',

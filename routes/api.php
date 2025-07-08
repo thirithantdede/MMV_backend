@@ -64,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/dashboard/visitor-tracks", "visitorTracks")->name("dashboard.visitor-tracks");
 
         Route::get("/dashboard/get-table-analytic", "getTableAnaylytic")->name("dashboard.get-table-anaylytic");
+        Route::get("/dashboard/get-assets-data", "getAssetsData")->name("dashboard.get-assets-data");
     });
 
     Route::get('/auth-check', function () {

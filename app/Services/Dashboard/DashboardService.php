@@ -5,9 +5,11 @@ namespace App\Services\Dashboard;
 use App\Models\Analytics;
 use App\Models\Element;
 use App\Models\ElementType;
+use App\Models\Event;
 use App\Models\Project;
 use App\Models\ProjectView;
-use App\Services\Element\BaseElement;
+use App\Models\Promotion;
+use App\Models\ShopInformation;
 use DB;
 use Log;
 
@@ -242,5 +244,47 @@ class DashboardService
         });
 
         return $elements->sortByDesc('total');
+    }
+
+    public function getAssetsData()
+    {
+        $total_promotions = Promotion::whereHas('element', function ($query) {
+            $query->where('project_id','=', $this->project->id);
+        })
+        ->whereBetween('created_at', [$this->startDate, $this->endDate])
+        ->count();
+
+        $total_events = Event::whereHas('element', function ($query) {
+            $query->where('project_id','=', $this->project->id);
+        })
+        ->whereBetween('created_at', [$this->startDate, $this->endDate])
+        ->count();
+
+        $total_interest = Analytics::where('project_id','=', $this->project->id)
+        ->where("event_type","=","search")
+        ->whereBetween('created_at', [$this->startDate, $this->endDate])
+        ->count();
+
+        $total_new_shops = Element::where('project_id','=', $this->project->id)
+        ->whereHas('shopInformation', function ($query) {
+            $query->where('project_id','=', $this->project->id);
+        })
+        ->whereBetween('created_at', [$this->startDate, $this->endDate])
+        ->count();
+
+        $total_closed_shops = Element::where('project_id','=', $this->project->id)
+        ->whereHas('shopInformation', function ($query) {
+            $query->where('project_id','=', $this->project->id);
+        })
+        ->where('is_closed','=', true)
+        ->count();
+
+        return  [
+            ['label' => 'Total Promotions', 'data' => $total_promotions],
+            ['label' => 'Total Events', 'data' => $total_events],
+            ['label' => 'Total Interest', 'data' => $total_interest],
+            ['label' => 'Total New Shops', 'data' => $total_new_shops],
+            ['label' => 'Total Closed Shops', 'data' => $total_closed_shops]
+        ];
     }
 }

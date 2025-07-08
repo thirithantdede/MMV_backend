@@ -12,5 +12,5 @@ Route::get('/', function () {
 Route::get('/test', action: function () {
     $project = Project::where('id', 1)->first();
     $dashboard = new DashboardService($project, "year");
-    dd($dashboard->getTableAnalytic());
+    dd($dashboard->getAssetsData());
 });
