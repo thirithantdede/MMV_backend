@@ -45,4 +45,10 @@ class SyncElementService
         $clarifiedElements = [];
 
     }
+
+    public function cleanElements()
+    {
+        $elements = Element::where('project_id', auth()->user()->project->id)->delete();   
+        return true;
+    }
 }

@@ -40,7 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(SyncElmentController::class)->group(function () {
         Route::post('/sync-elements', 'syncElements')->name('sync-elements');
-        Route::post('/sync-map', 'syncMap')->name('sync-elements');
+        Route::post('/clean-elements', 'cleanElements')->name('clean-elements');
+        Route::post('/sync-map', 'syncMap')->name('sync-map');
         Route::post('/delete-element', 'deleteElement')->name('delete-element');
     });
 

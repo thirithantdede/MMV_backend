@@ -20,6 +20,13 @@ class SyncElmentController extends Controller
         return responseJson(['data' => $syncedElements]);
     }
 
+    public function cleanElements(Request $request)
+    {
+        $service = (new SyncElementService())->cleanElements();
+
+        return responseJson(['data' => $service]);
+    }
+
     public function syncMap(SyncMapRequest $request)
     {
         $buildingFootprint = auth()->user()->project->buildingFootprint;
@@ -30,8 +37,10 @@ class SyncElmentController extends Controller
     }
 
     public function deleteElement(Request $request){
-        $element = Element::findOrFail($request->id);
-        $element->delete();
+        $element = Element::find($request->id);
+        if($element){
+            $element->delete();
+        }
         return true;
     }
 }
