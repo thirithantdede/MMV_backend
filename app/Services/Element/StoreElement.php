@@ -12,28 +12,28 @@ class StoreElement
 {
     public function getPromotionElements(array $floor_ids)
     {
-        $elements = Element::with('shopInformation')->whereIn('floor_id',$floor_ids)->whereHas('shopInformation', function ($query) {
+        $elements = Element::with('shopInformation')->whereIn('floor_id', $floor_ids)->whereHas('shopInformation', function ($query) {
             $query->whereNotNull('promotions')
                 ->where(function ($query) {
                     $query->where('promotions', '!=', '[]')
-                          ->where('promotions', '!=', '{}');
+                        ->where('promotions', '!=', '{}');
                 })
                 ->where(function ($query) {
                     $query->whereJsonDoesntContain('promotions->is_now', false)
-                          ->orWhereNull('promotions->is_now');
+                        ->orWhereNull('promotions->is_now');
                 });
         })->get();
-    
+
         return $elements;
     }
 
     public function getEventElements(array $floor_ids)
     {
-        $elements = Element::with('event')->whereHas('event')->whereIn('floor_id',$floor_ids)->get();
+        $elements = Element::with('event')->whereHas('event')->whereIn('floor_id', $floor_ids)->get();
 
         return $elements;
     }
-    
+
 
 
     public function mutateElement(Element $element, array $data): ShopInformation
@@ -54,23 +54,26 @@ class StoreElement
     public function prepareData(array $data, Element $element): array
     {
 
-        if(isset($data['promotions']) && $data['promotions']['is_now'] == true){
-            Promotion::updateOrCreate(
-                [
-                    'element_id' => $element->id,
-                    'title' => isset($data['promotions']['title']) ? $data['promotions']['title'] : 'Promotion',
-                    'is_featured' => 1
-                ],
-                [
-                    'title' => isset($data['promotions']['title']) ? $data['promotions']['title'] : 'Promotion',
-                    'description' => isset($data['promotions']['description']) ? $data['promotions']['description'] : 'Promotion Description',
-                    'start_date' => now(),
-                    'end_date' => isset($data['promotions']['end_date']) ? $data['promotions']['end_date'] : now()->addDays(30),
-                    'is_featured' => true
-                ]
-            );
-            
-        }else{
+        if (isset($data['promotions']) && array_key_exists('is_now', $data['promotions'])) {
+
+            if ($data['promotions']['is_now'] == true) {
+                Promotion::updateOrCreate(
+                    [
+                        'element_id' => $element->id,
+                        'title' => isset($data['promotions']['title']) ? $data['promotions']['title'] : 'Promotion',
+                        'is_featured' => 1
+                    ],
+                    [
+                        'title' => isset($data['promotions']['title']) ? $data['promotions']['title'] : 'Promotion',
+                        'description' => isset($data['promotions']['description']) ? $data['promotions']['description'] : 'Promotion Description',
+                        'start_date' => now(),
+                        'end_date' => isset($data['promotions']['end_date']) ? $data['promotions']['end_date'] : now()->addDays(30),
+                        'is_featured' => true
+                    ]
+                );
+            }
+
+        } else {
             Promotion::where('element_id', $element->id)->update(['is_featured' => false]);
         }
 
@@ -92,7 +95,7 @@ class StoreElement
 
     public function updateStoreInfo(ShopInformation $shopElement, array $data)
     {
-      
+
         $shopElement->update($data);
 
         return $shopElement;
