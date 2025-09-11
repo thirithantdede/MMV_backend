@@ -1,66 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Formula Calculation Breakdown
 
-## About Laravel
+MMV တွင်သုံးတဲ့ algorithm နှစ်ခုမှာဆို အဓိကပိုမြန်တဲ့လမ်းကြောင်းဟာ A* ဖြစ်သည် ။ သို့သော်သတိပြုရမည်ကား A* algorithm သည် တချို့သောအခြေနေ path လမ်းကြောင်းတွင် တခြား algorithmထက် ပိုမမြန်သည် case မျိုးရှိနိုင်သည်။ 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+အောက်ပါတွင် အဆင့်များခွဲ၍ ရှင်းပြသွားမည်ဖြစ်သည်
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Constant Reference
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Estimate Time တွက်ဖို့လျှာ လူတစ်ယောက်ပျှမ်းမျှ လမ်လျှောက်နှုန်း,အလွှာကူးသည်အချိန်တွင်ကြာချိန် စသည်တို့အား general variable အနေနဲ့သတ်မှတ်ထားပြီ formula များအားဆက်လက်တွက်ချက်ထားသည်
 
-## Learning Laravel
+| ကိန်းသေ             | တန်ဖိုး                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| Walking Speed | 1.4 ~ 5km |
+| Transition Time | 30s |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Distance in meters formula
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+လက်ရှိ software တွင် grid များကို pixel များဖြင့်သတ်မှတ်ထားပြီး 1 grid သည် 10 ပေပတ်လည်အလျားသတ်မှတ်ထားသည်။ 
 
-### Premium Partners
+```javascript
+distanceInMeters = totalDistanceInPixels ÷ grid_size 
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Walking Time formula
 
-## Contributing
+စုစုပေါင်း walking time ကိုတွက်ရာတွင် သွားရမည်အကွာအငေးအား walking speed ဖြစ်စားခြင်းဖြင့်ရနိုင်သည်
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```javascript
+walkingTime = distanceInMeters ÷ WALKING_SPEED 
+```
 
-## Code of Conduct
+ဉပမာ ပထမအထက်ကနေ တတိယအထပ်ကိုသွားရမည်ကား မူလ walking time အပြင် အလွှာတလွှာနှင့်တလွှာကူးချိန် ပျှမ်းမျှကြာချိန်ကိုထည့်ပေါင်းရမည်
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```javascript
+transitionTime = transitionCount * 30
+စုစုပေါင်းအလွှာကူးချိန် = ကူးရမည်အလွှာပေါင်း x 30s
 
-## Security Vulnerabilities
+totalWalkingTime = walkingTime + transitionTime
+စုစုပေါင်းလမ်းလျှောက်ကြာချိန် = လမ်းလျှောက်ကြာချိန် + စုစုပေါင်းအလွှာကူးချိန် 
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Final formula
+ဉပမာ ကိုယ်က၂ လွှာကနေ လေးလွှာမှာရှိတဲ့ရုပ်ရှင်ရုံကိုသွားမည်ဆိုလျှင် 
+```
+Total Estimate Time = (Distance ÷ Walking Speed) + (Floor Changes × Transition Time)
+ခန့်မှန်းကြာချိန် = (မီတာ ÷ လမ်းလျှောက်နှုန်း) +​ ( သွားရမဲ့ အလွှာစုစုပေါင်း x အလွှာကူးကြာချိန် ) 
+```
+ကိုယ်သွားရမဲ့ခရီးက လေးလွှာအထိ အဲ့တာကို meter 100 ဆိုသွားရမည်ဆိုကား 
 
-## License
+ခန့်မှန်းကြာချိန် = (မီတာ ÷ လမ်းလျှောက်နှုန်း) +​ ( သွားရမဲ့ အလွှာစုစုပေါင်း x အလွှာကူးကြာချိန် ) 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+ခန့်မှန်းကြာချိန် = (100 ÷ 1.4) + (2 × 30)
+
+ခန့်မှန်းကြာချိန် = 71.4 + 60
+
+ခန့်မှန်းကြာချိန် = 131 စက္ကန့် (about 2မိနစ် 11စက္ကန့်)
