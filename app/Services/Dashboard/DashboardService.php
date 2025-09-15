@@ -272,12 +272,13 @@ class DashboardService
         ->whereBetween('created_at', [$this->startDate, $this->endDate])
         ->count();
 
-        $total_closed_shops = Element::where('project_id','=', $this->project->id)
+        $total_closed_shops = Element::where('project_id', $this->project->id)
         ->whereHas('shopInformation', function ($query) {
-            $query->where('project_id','=', $this->project->id);
+            $today = strtolower(now()->format('l'));
+            $query->whereJsonContains('closed_days', $today);
         })
-        ->where('is_closed','=', true)
         ->count();
+    
 
         return  [
             ['label' => 'Total Promotions', 'data' => $total_promotions],
